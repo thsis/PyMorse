@@ -19,7 +19,7 @@ cloudpickle==1.2.1
 CommonsDownloader==0.5.3
 configparser==3.8.1
 contextlib2==0.5.5
-cryptography==2.1.4
+cryptography==2.3
 cssselect==1.0.3
 cssutils==1.0.2
 decorator==4.4.0
