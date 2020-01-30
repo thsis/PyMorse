@@ -2,6 +2,30 @@ import json
 
 
 class MorseTranslator:
+    """
+    De- and Encoding suite for Morse Code.
+
+    Translate clear text strings or file contents into morse code and vice versa.
+
+    Attributes
+    ----------
+    char2morse : dict
+        Mapping of ASCII characters to morse code.
+    morse2char : dict
+        Mapping of morse code to ASCII characters
+
+    Methods
+    -------
+    encode(char)
+        Encode string of ASCII character into morse code.
+    decode(char)
+        Decode morse code to ASCII characters.
+    encode_document(input_path, output_path=None)
+        Read file and encode content into morse code.
+    decode_document(input_path, output_path=None)
+        Read file and decode content into ASCII characters.
+
+    """
     def __init__(self):
         self.char2morse = self.__get_char2morse()
         self.morse2char = self.__get_morse2char()
@@ -23,6 +47,25 @@ class MorseTranslator:
         return morse2char
 
     def encode(self, string):
+        """
+        Encode string of ASCII characters into morse code.
+
+        Parameters
+        ----------
+        string : str
+            Input string to be encoded. Whitespace will be converted to a forward slash.
+
+        Returns
+        -------
+        out : str
+            Encoded input string.
+
+        Raises
+        ------
+        Value Error
+            If a character of the input string is not a valid ASCII character.
+
+        """
         out = ' '.join(self.__encode_char(s) for s in string.upper())
         return out.strip()
 
@@ -34,6 +77,25 @@ class MorseTranslator:
             raise ValueError(f"{char} is not a valid ASCII character.")
 
     def decode(self, string):
+        """
+        Decode string of morse code into ASCII characters.
+
+        Parameters
+        ----------
+        string : str
+            Input string to be decoded. End of words should be declared by a forward slash.
+
+        Returns
+        -------
+        out : str
+            Decoded input string.
+
+        Raises
+        ------
+        ValueError
+            If a provided sequence is not a valid morse code.
+
+        """
         words = string.split("/")
         out = ' '.join(self.__decode_word(word) for word in words)
         return out.strip()
@@ -51,6 +113,28 @@ class MorseTranslator:
         return out
 
     def decode_document(self, input_path, output_path=None):
+        """
+        Read content of file and decode morse code into clear text.
+
+        Parameters
+        ----------
+        input_path : str
+            Path to morse encoded file.
+        output_path : str or None
+            Path to write result to. Defaults to None, in this case no file is written.
+
+        Returns
+        -------
+        out : str
+            Decoded document content.
+
+
+        Raises
+        ------
+        ValueError
+            If a provided sequence in the input document is not a valid morse code.
+
+        """
         out = ""
         with open(input_path) as f:
             for line in f.read().splitlines():
@@ -60,6 +144,28 @@ class MorseTranslator:
         return out
 
     def encode_document(self, input_path, output_path=None):
+        """
+        Read content of file and encode into morse code.
+
+        Parameters
+        ----------
+        input_path : str
+            Path to file.
+        output_path : str or None
+            Path to write result to. Defaults to None, in this case no file is written.
+
+        Returns
+        -------
+        out : str
+            Encoded document content.
+
+        Raises
+        ------
+        ValueError
+            If a character in the document is not in the ASCII set.
+
+        """
+
         out = ""
         with open(input_path) as f:
             for line in f.read().splitlines():

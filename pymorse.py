@@ -9,6 +9,7 @@ def encode(args):
     else:
         res = translator.encode(args.input)
     print(res)
+    return res
 
 
 def decode(args):
@@ -18,20 +19,19 @@ def decode(args):
     else:
         res = translator.decode(args.input)
     print(res)
+    return res
 
 
 parent_parser = argparse.ArgumentParser(description="Convert clear text to morse code or vice versa")
 subparsers = parent_parser.add_subparsers(title="actions")
 parser_encode = subparsers.add_parser("encode",
-                                      add_help=False,
-                                      description="The encode parser",
+                                      description="Encode strings of ASCII characters in morse code",
                                       help="encode clear text to morse code")
 parser_encode.add_argument("input", help="string or file to be converted")
 parser_encode.add_argument("-f", "--file", action="store_true", default=False, help="use file")
 parser_encode.set_defaults(func=encode)
 parser_decode = subparsers.add_parser("decode",
-                                      add_help=False,
-                                      description="The decode parser",
+                                      description="Decode morse code into clear text",
                                       help="decode morse code into clear text")
 parser_decode.add_argument("input", help="string or file to be converted")
 parser_decode.add_argument("-f", "--file", action="store_true", default=False, help="use file")
